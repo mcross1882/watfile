@@ -1,0 +1,24 @@
+#!/bin/bash
+
+if [ "$#" -lt 1 ]; then
+    echo "watfile [files to zip...]"
+    exit 1
+fi
+
+hash jq 2>/dev/null || { echo >&2 "The jq command is required to run this script. https://stedolan.github.io/jq/"; exit 1;}
+hash openssl 2>/dev/null || { echo >&2 "The openssl command is required to run this script."; exit 1;}
+hash zip 2>/dev/null || { echo >&2 "The zip command is required to run this script."; exit 1;}
+
+INDEX=$(((RANDOM % 25) + 1))
+PASSWORD=$(openssl rand -base64 24)
+
+SONG=$(cat toptracks.json | jq ".songs[$INDEX]")
+
+SONG="${SONG%\"}"
+SONG="${SONG#\"}"
+
+zip -e -9 -p "$SONG" -P "$PASSWORD" $@
+
+echo "Saved files to $SONG.zip"
+echo "Zip password is $PASSWORD"
+
