@@ -7,6 +7,14 @@ of security so you don't feel totally guilty about sending senstivie materials o
 If so you are in the right place! This simple bash script will encrypt your files in a password protected
 zip file that is randomly named to a Top 200 song!
 
+#### Installation
+
+Make sure you have the following commands installed on your machine
+
+- `openssl` this is used to randomly generate the password
+- `zip` this is used to encrypt/compress the files
+- `jq` this is used to parse the json files (https://stedolan.github.io/jq/)
+
 #### Usage
 
 ```
